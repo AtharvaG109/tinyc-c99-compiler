@@ -77,18 +77,6 @@ tinyc does not require runtime environment variables for normal builds or tests.
 | `SELFHOST_DIR` | No | `/private/tmp/tinyc-selfhost-build` | Scratch directory for self-host preprocessed, assembly, and object files. |
 | `SELFHOST_OUT` | No | `/private/tmp/tinyc-selfhost` | Output path for the self-hosted compiler binary. |
 
-## Project Status
-
-| Phase | Component | Status |
-|-------|-----------|--------|
-| Week 1 | Lexer + Foundation | Done |
-| Week 2-3 | Parser (recursive descent + Pratt) | Done |
-| Week 4 | Semantic Analysis + Type Checker | Done |
-| Week 5 | IR Generation (TAC) | Done |
-| Week 6 | Register Allocator (stack slots) | Done |
-| Week 7 | x86-64 Codegen (AT&T syntax) | Done |
-| Week 8 | Self-Hosting Bootstrap | Done |
-
 ## C99 Coverage
 
 **Validated by tests:** integer arithmetic, floating-point arithmetic/calls/returns, functions, recursion, function pointers, function-pointer typedefs, typedef-name declarations in block scope, storage classes, qualifiers including const-write rejection, variadic calls, pointers, arrays, bounded local VLA-style indexing, local and global aggregate initializers, structs, unions, simple integer bit-fields, struct/union assignment, aggregate designators, compound literals, `sizeof`, globals, string literals, `if`, `for`, `switch`, `goto`, calls to external functions, small and memory-class struct pass/return ABI cases, `_Pragma` no-op parsing, `_Complex`/`_Imaginary` keyword parsing as scalar floating aliases, preprocessor line-marker skipping, and parser coverage for common C99 declarations and expressions.
