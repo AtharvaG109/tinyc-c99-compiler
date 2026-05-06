@@ -30,6 +30,7 @@ add_executable(tinyc
     src/irgen.c
     src/regalloc.c
     src/codegen.c
+    src/abi_classify.c
 )
 target_include_directories(tinyc PRIVATE include)
 

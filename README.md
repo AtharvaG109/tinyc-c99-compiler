@@ -13,6 +13,7 @@ Source file → gcc -E (preprocessor) → Lexer → Parser → Sema → IRgen �
 ```bash
 # Primary workflow, no CMake required
 make
+make lint
 make check
 ```
 
@@ -63,6 +64,18 @@ as /tmp/structs.s -o /tmp/structs.o
 cc /tmp/structs.o -o /tmp/structs
 /tmp/structs
 ```
+
+## Configuration
+
+tinyc does not require runtime environment variables for normal builds or tests.
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `CC` | No | `cc` | C compiler used to build tinyc and test binaries. |
+| `CFLAGS` | No | `-std=c11 -Wall -Wextra -Wpedantic -Wno-unused-parameter -g -Iinclude` | Compiler flags for local builds. |
+| `LDFLAGS` | No | empty | Linker flags, including deterministic macOS self-host flags. |
+| `SELFHOST_DIR` | No | `/private/tmp/tinyc-selfhost-build` | Scratch directory for self-host preprocessed, assembly, and object files. |
+| `SELFHOST_OUT` | No | `/private/tmp/tinyc-selfhost` | Output path for the self-hosted compiler binary. |
 
 ## Project Status
 

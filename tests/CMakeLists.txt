@@ -15,6 +15,7 @@ set(TINYC_LIB_SOURCES
     ${CMAKE_SOURCE_DIR}/src/irgen.c
     ${CMAKE_SOURCE_DIR}/src/regalloc.c
     ${CMAKE_SOURCE_DIR}/src/codegen.c
+    ${CMAKE_SOURCE_DIR}/src/abi_classify.c
 )
 
 # test_arena

@@ -5,18 +5,34 @@ build/
 *.s
 *.out
 *.dSYM/
+coverage.out
+target/
+dist/
+node_modules/
 
 # Local compiler binaries and scratch artifacts
 /tinyc
 /tinyc_asan
 /tinyc_s0
 /rewrite_codegen.py
+*.db
+*.sqlite
 
 # CMake generated files
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 compile_commands.json
+
+# Secrets and local environment
+.env
+*.pem
+*.key
+credentials.json
+
+# Python cache
+__pycache__/
+*.py[cod]
 
 # OS/editor noise
 .DS_Store

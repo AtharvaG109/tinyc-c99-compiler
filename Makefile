@@ -14,26 +14,32 @@ SRCS = $(SRCDIR)/arena.c $(SRCDIR)/strtab.c $(SRCDIR)/diagnostic.c \
        $(SRCDIR)/regalloc.c $(SRCDIR)/codegen.c $(SRCDIR)/abi_classify.c
 MAIN_SRC = $(SRCDIR)/main.c
 
-.PHONY: all clean check test test_arena test_strtab test_lexer test_parser test_integration test_abi selfhost
+.PHONY: all build lint clean check test test_arena test_strtab test_lexer test_parser test_integration test_abi selfhost
 
 all: $(BUILDDIR)/tinyc
 
-$(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+build: $(BUILDDIR)/tinyc
 
-$(BUILDDIR)/tinyc: $(SRCS) $(MAIN_SRC) | $(BUILDDIR)
+lint:
+	$(CC) $(CFLAGS) -Werror -fsyntax-only $(SRCS) $(MAIN_SRC)
+
+$(BUILDDIR)/.dir:
+	mkdir -p $(BUILDDIR)
+	touch $@
+
+$(BUILDDIR)/tinyc: $(SRCS) $(MAIN_SRC) | $(BUILDDIR)/.dir
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRCS) $(MAIN_SRC)
 
-$(BUILDDIR)/test_arena: $(TESTDIR)/unit/test_arena.c $(SRCS) | $(BUILDDIR)
+$(BUILDDIR)/test_arena: $(TESTDIR)/unit/test_arena.c $(SRCS) | $(BUILDDIR)/.dir
 	$(CC) $(CFLAGS) -I$(TESTDIR) -o $@ $(TESTDIR)/unit/test_arena.c $(SRCS)
 
-$(BUILDDIR)/test_strtab: $(TESTDIR)/unit/test_strtab.c $(SRCS) | $(BUILDDIR)
+$(BUILDDIR)/test_strtab: $(TESTDIR)/unit/test_strtab.c $(SRCS) | $(BUILDDIR)/.dir
 	$(CC) $(CFLAGS) -I$(TESTDIR) -o $@ $(TESTDIR)/unit/test_strtab.c $(SRCS)
 
-$(BUILDDIR)/test_lexer: $(TESTDIR)/unit/test_lexer.c $(SRCS) | $(BUILDDIR)
+$(BUILDDIR)/test_lexer: $(TESTDIR)/unit/test_lexer.c $(SRCS) | $(BUILDDIR)/.dir
 	$(CC) $(CFLAGS) -I$(TESTDIR) -o $@ $(TESTDIR)/unit/test_lexer.c $(SRCS)
 
-$(BUILDDIR)/test_parser: $(TESTDIR)/unit/test_parser.c $(SRCS) | $(BUILDDIR)
+$(BUILDDIR)/test_parser: $(TESTDIR)/unit/test_parser.c $(SRCS) | $(BUILDDIR)/.dir
 	$(CC) $(CFLAGS) -I$(TESTDIR) -o $@ $(TESTDIR)/unit/test_parser.c $(SRCS)
 
 test: $(BUILDDIR)/test_arena $(BUILDDIR)/test_strtab $(BUILDDIR)/test_lexer $(BUILDDIR)/test_parser
