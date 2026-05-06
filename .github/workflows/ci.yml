@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Build, Test, and Self-Host
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and run tests
+        run: make check
+
+      - name: Build stage1 with tinyc
+        run: make selfhost LDFLAGS=-Wl,-no_uuid SELFHOST_OUT=/tmp/tinyc-stage1
+
+      - name: Build stage2 and compare
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage2_dir=/tmp/tinyc-stage2
+          mkdir -p "$stage2_dir"
+          objs=()
+          for src in src/arena.c src/strtab.c src/diagnostic.c src/lexer.c src/type.c src/parser.c src/sema.c src/ir.c src/irgen.c src/regalloc.c src/codegen.c src/abi_classify.c src/main.c; do
+            name=$(basename "$src" .c)
+            pp="$stage2_dir/$name.i"
+            asm="$stage2_dir/$name.s"
+            obj="$stage2_dir/$name.o"
+            cc -E -P -std=c99 -DTINYC_SELFHOST -nostdinc -Iselfhost/include -Iinclude "$src" -o "$pp"
+            /tmp/tinyc-stage1 -S "$pp" -o "$asm"
+            cc -c "$asm" -o "$obj"
+            objs+=("$obj")
+          done
+          cc -Wl,-no_uuid "${objs[@]}" -o "$stage2_dir/tinyc"
+          cmp -s /tmp/tinyc-stage1 "$stage2_dir/tinyc"

@@ -1,0 +1,24 @@
+# Build outputs
+build/
+*.o
+*.obj
+*.s
+*.out
+*.dSYM/
+
+# Local compiler binaries and scratch artifacts
+/tinyc
+/tinyc_asan
+/tinyc_s0
+/rewrite_codegen.py
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo
