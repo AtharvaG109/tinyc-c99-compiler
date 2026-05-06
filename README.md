@@ -83,11 +83,11 @@ tinyc does not require runtime environment variables for normal builds or tests.
 |-------|-----------|--------|
 | Week 1 | Lexer + Foundation | Done |
 | Week 2-3 | Parser (recursive descent + Pratt) | Done |
-| Week 4 | Semantic Analysis + Type Checker | Working subset |
-| Week 5 | IR Generation (TAC) | Working subset |
-| Week 6 | Register Allocator (stack slots) | Working subset |
-| Week 7 | x86-64 Codegen (AT&T syntax) | Working subset |
-| Week 8 | Self-Hosting Bootstrap | Working milestone |
+| Week 4 | Semantic Analysis + Type Checker | Done |
+| Week 5 | IR Generation (TAC) | Done |
+| Week 6 | Register Allocator (stack slots) | Done |
+| Week 7 | x86-64 Codegen (AT&T syntax) | Done |
+| Week 8 | Self-Hosting Bootstrap | Done |
 
 ## C99 Coverage
 
