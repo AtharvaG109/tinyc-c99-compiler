@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Build, Test, and Self-Host
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     steps:
       - name: Checkout
