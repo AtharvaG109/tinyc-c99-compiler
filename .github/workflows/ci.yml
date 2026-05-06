@@ -14,8 +14,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build and run tests
+      - name: Lint
+        run: make lint
+
+      - name: Build
+        run: make build
+
+      - name: Test
         run: make check
+
+      - name: Sanitizer test
+        run: make check BUILDDIR=build-asan CFLAGS='-std=c11 -Wall -Wextra -Wpedantic -Wno-unused-parameter -g -Iinclude -fsanitize=address,undefined -fno-omit-frame-pointer' LDFLAGS='-fsanitize=address,undefined'
 
       - name: Build stage1 with tinyc
         run: make selfhost LDFLAGS=-Wl,-no_uuid SELFHOST_OUT=/tmp/tinyc-stage1
