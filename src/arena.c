@@ -2,6 +2,7 @@
  * arena.c — Bump-pointer arena allocator implementation
  */
 #include "tinyc/arena.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -34,6 +35,7 @@ void *arena_alloc(Arena *a, size_t size, size_t align) {
     }
 
     size_t offset = align_up(cur->used, align);
+    if (offset > SIZE_MAX - size) return NULL;
     if (offset + size <= cur->cap) {
         cur->used = offset + size;
         return cur->base + offset;
@@ -43,6 +45,7 @@ void *arena_alloc(Arena *a, size_t size, size_t align) {
      * New page is at least as big as the default, or big enough for this
      * allocation (whichever is larger). */
     size_t new_cap = ARENA_DEFAULT_CAP;
+    if (size > SIZE_MAX - align) return NULL;
     if (size + align > new_cap) {
         new_cap = size + align;
     }

@@ -17,7 +17,9 @@
 #include <string.h>
 
 static char *read_file(const char *path, size_t *out_len) {
+#ifdef DEBUG
     fprintf(stderr, "read_file: %s\n", path);
+#endif
     FILE *f;
     if (strcmp(path, "-") == 0) {
         f = stdin;
@@ -32,7 +34,12 @@ static char *read_file(const char *path, size_t *out_len) {
         size_t n = fread(buf + len, 1, cap - len, f);
         len += n;
         if (n == 0) break;
-        if (len == cap) { cap *= 2; buf = (char *)realloc(buf, cap); }
+        if (len == cap) {
+            cap *= 2;
+            char *tmp = (char *)realloc(buf, cap);
+            if (!tmp) { free(buf); fprintf(stderr, "error: out of memory\n"); exit(1); }
+            buf = tmp;
+        }
     }
     if (f != stdin) fclose(f);
     buf[len] = '\0';
@@ -55,8 +62,14 @@ static void dump_tokens(const char *filename, const char *src, size_t len) {
                token_kind_name(t.kind), t.len, t.start);
         if (t.kind == TOK_INT_LIT) printf("  val=%llu", t.int_val);
         if (t.kind == TOK_FLOAT_LIT) printf("  val=%g", t.float_val);
-        if (t.kind == TOK_IDENT) printf("  str='%s'", strtab_get(&strings, t.str_idx));
-        if (t.kind == TOK_STR_LIT) printf("  str='%s'", strtab_get(&strings, t.str_idx));
+        if (t.kind == TOK_IDENT) {
+            const char *s = strtab_get(&strings, t.str_idx);
+            if (s) printf("  str='%s'", s);
+        }
+        if (t.kind == TOK_STR_LIT) {
+            const char *s = strtab_get(&strings, t.str_idx);
+            if (s) printf("  str='%s'", s);
+        }
         printf("\n");
         if (t.kind == TOK_EOF) break;
     }
