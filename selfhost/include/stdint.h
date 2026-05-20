@@ -12,4 +12,8 @@ typedef unsigned long long uint64_t;
 typedef long intptr_t;
 typedef unsigned long uintptr_t;
 
+#ifndef SIZE_MAX
+#define SIZE_MAX ((size_t)-1)
+#endif
+
 #endif
