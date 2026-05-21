@@ -65,6 +65,10 @@ cc /tmp/structs.o -o /tmp/structs
 /tmp/structs
 ```
 
+## Benchmarking
+
+See `docs/benchmarking.md` for benchmark discipline. tinyc separates compiler throughput, generated-code quality, and self-host cost so performance notes do not blur correctness or ABI coverage.
+
 ## Configuration
 
 tinyc does not require runtime environment variables for normal builds or tests.

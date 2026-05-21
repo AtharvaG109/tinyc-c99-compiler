@@ -596,13 +596,15 @@ static void codegen_func(const IRFunc *f, FILE *out) {
             load_reg(out, &ra, ins->src1, "%rax");
             load_reg(out, &ra, ins->src2, "%rcx");
             fprintf(out, "\tcmpq %%rcx, %%rax\n");
+            int use_unsigned = type_is_unsigned_integer(ins->src1.type) ||
+                               type_is_unsigned_integer(ins->src2.type);
             switch (ins->op) {
             case IR_EQ: fprintf(out, "\tsete %%al\n");  break;
             case IR_NE: fprintf(out, "\tsetne %%al\n"); break;
-            case IR_LT: fprintf(out, "\tsetl %%al\n");  break;
-            case IR_LE: fprintf(out, "\tsetle %%al\n"); break;
-            case IR_GT: fprintf(out, "\tsetg %%al\n");  break;
-            case IR_GE: fprintf(out, "\tsetge %%al\n"); break;
+            case IR_LT: fprintf(out, use_unsigned ? "\tsetb %%al\n"  : "\tsetl %%al\n");  break;
+            case IR_LE: fprintf(out, use_unsigned ? "\tsetbe %%al\n" : "\tsetle %%al\n"); break;
+            case IR_GT: fprintf(out, use_unsigned ? "\tseta %%al\n"  : "\tsetg %%al\n");  break;
+            case IR_GE: fprintf(out, use_unsigned ? "\tsetae %%al\n" : "\tsetge %%al\n"); break;
             default: break;
             }
             fprintf(out, "\tmovzbq %%al, %%rax\n");
