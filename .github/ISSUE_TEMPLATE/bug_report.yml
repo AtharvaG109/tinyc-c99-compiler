@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible tinyc compiler defect.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What compiler behavior is wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Source snippet, command, expected behavior, and observed behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, compiler used to build tinyc, and linker details.
+    validations:
+      required: true

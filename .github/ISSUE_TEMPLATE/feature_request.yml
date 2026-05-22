@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest a tinyc compiler improvement.
+title: "[feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: What language, ABI, tooling, or validation workflow would this improve?
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Expected tests
+      description: What unit, integration, ABI, or self-host coverage should prove the feature?
+    validations:
+      required: true

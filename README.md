@@ -65,6 +65,8 @@ cc /tmp/structs.o -o /tmp/structs
 /tmp/structs
 ```
 
+For release-focused validation, follow [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md). It covers linting, full tests, deterministic self-hosting, README claim review, and generated-artifact checks.
+
 ## Benchmarking
 
 See `docs/benchmarking.md` for benchmark discipline. tinyc separates compiler throughput, generated-code quality, and self-host cost so performance notes do not blur correctness or ABI coverage.
